@@ -268,7 +268,17 @@
       this.stop();
       this.resetLaps();
       initializeTimer(0);
-    };
+		};
+		
+		this.export = function(){
+			var elHtml = document.getElementById('laps').innerText;
+			var link = document.createElement('a');
+			var mimeType = 'text/plain';
+
+			link.setAttribute('download', 'logFile');
+			link.setAttribute('href', 'data:' + mimeType + ';charset=utf-8,' + encodeURIComponent(elHtml));
+			link.click();
+		}
 
     /* 
       Initializing netTime if provided via options
@@ -298,9 +308,9 @@ window.updateLap = function(lapSplitString, isReset){
   }else{
     var li = document.createElement('li');
     lapCount += 1;
-    li.innerHTML = "#"+lapCount+" "+lapSplitString;
+    li.innerHTML = "#"+lapCount+" "+lapSplitString+"</br><input type='text' class='bar'>";
     li.className = "tile";
-    lapContainer.appendChild(li);
+		lapContainer.appendChild(li);
   }
 }
 
@@ -314,6 +324,7 @@ var replaceClass = function(ele, class1, class2){
 var stopwatch = new StopWatch({callback: 'updateWatch', lapCallback: 'updateLap'});
 var startStopButton = document.getElementById("start-stop");
 var resetLapButton = document.getElementById("reset-lap");
+var exportButton = document.getElementById("export");
 
 var startStopButtonEvent = function(){
   if(!stopwatch.running()){
@@ -339,11 +350,17 @@ var resetLapButtonEvent = function(){
   }
 }
 
+var exportButtonEvent = function(){
+	stopwatch.export();
+}
+
 //Adding event listeners to the buttons
 if(!document.addEventListener){
   startStopButton.attachEvent("onclick", startStopButtonEvent); //For IE8
-  resetLapButton.attachEvent("onclick", resetLapButtonEvent); //For IE8
+	resetLapButton.attachEvent("onclick", resetLapButtonEvent); //For IE8
+	exportButton.attachEvent("onclick", exportButtonEvent); //For IE8
 }else{
   startStopButton.addEventListener("click", startStopButtonEvent);
-  resetLapButton.addEventListener('click', resetLapButtonEvent);
+  resetLapButton.addEventListener("click", resetLapButtonEvent);
+	exportButton.addEventListener("click", exportButtonEvent);
 }
