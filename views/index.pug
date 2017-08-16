@@ -1,5 +1,8 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  .wrapper
+      #watch-dial.tile 00:00:00:00
+      button#start-stop.tile.action-button.start-button Start
+      button#reset-lap.tile.action-button.reset-button Reset
+      ul#laps
