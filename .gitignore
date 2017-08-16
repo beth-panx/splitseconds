@@ -53,10 +53,7 @@ $RECYCLE.BIN/
 .idea
 *.log
 obj
-bin
 *.user
 
 node_modules/**
-packages/**
-typings/**
 .vscode/**
